@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">🏈 {{ title }}</h1>
+                <p class="subtitle">{{ description }}</p>
+            </div>
+        </header>
+
+        <!-- Controls Panel -->
+        <aside class="controls-panel">
+            <div class="control-section">
+                <h3>⚙️ Configuration</h3>
+                
+                <div class="control-group">
+                    <label for="season-select">Season:</label>
+                    <select id="season-select">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="week-select">Week:</label>
+                    <select id="week-select">
+                        <option value="">All Weeks</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="top-n">Show Top N Players:</label>
+                    <input type="range" id="top-n" min="5" max="100" value="25">
+                    <span id="top-n-value">25</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Filter by Position:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox">
+                            <input type="checkbox" value="QB"> QB
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" value="RB"> RB
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" value="WR/TE"> WR/TE
+                        </label>
+                    </div>
+                </div>
+
+                <button id="load-btn" class="btn btn-primary">Load Data</button>
+                <button id="download-btn" class="btn btn-secondary" disabled>Download CSV</button>
+            </div>
+
+            <div class="control-section">
+                <h3>📋 Scoring System (PPR)</h3>
+                <div class="scoring-info">
+                    <small>Points Per Reception scoring</small>
+                </div>
+                <button id="scoring-toggle" class="btn btn-small">Show Rules</button>
+                <div id="scoring-rules" class="scoring-rules hidden">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Metrics -->
+            <div class="metrics" id="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">-</div>
+                    <div class="metric-label">Total Players</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">-</div>
+                    <div class="metric-label">Top Score</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">-</div>
+                    <div class="metric-label">Average Score</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="season-display">-</div>
+                    <div class="metric-label">Season</div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Loading NFL player data...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="error hidden"></div>
+
+            <!-- Leaderboard Table -->
+            <div id="leaderboard-container" class="leaderboard-container hidden">
+                <h2>🏈 Fantasy Football Leaderboard</h2>
+                <div class="table-wrapper">
+                    <table id="leaderboard-table" class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player Name</th>
+                                <th>Position</th>
+                                <th>Fantasy Points</th>
+                                <th>Pass TD</th>
+                                <th>Pass Yards</th>
+                                <th>Rush TD</th>
+                                <th>Rush Yards</th>
+                                <th>Rec TD</th>
+                                <th>Rec Yards</th>
+                                <th>Receptions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div id="charts-container" class="charts-container hidden">
+                <div class="chart-row">
+                    <div class="chart">
+                        <h3>📊 Top 10 Players</h3>
+                        <div id="chart-top-10"></div>
+                    </div>
+                    <div class="chart">
+                        <h3>📈 Fantasy Points Distribution</h3>
+                        <div id="chart-distribution"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p id="footer-text">Ready to load data | Powered by nflverse + Azure</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
