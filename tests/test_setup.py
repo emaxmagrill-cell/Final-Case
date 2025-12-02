@@ -1,6 +1,9 @@
 import sys
 import os
 
+# Add parent directory to path so we can import from src/
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 def check_imports():
     print("Checking imports...")
     try:
@@ -27,7 +30,6 @@ def check_imports():
 def check_local_modules():
     print("\nChecking local modules...")
     try:
-        sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
         from src.data_fetcher import get_available_seasons
         print("✓ src.data_fetcher imported")
         from src.config import FANTASY_SCORING
