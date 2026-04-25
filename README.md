@@ -45,7 +45,3 @@ The website is over all very successful. The app is deployable with a clear lead
 
 ![Leaderboard Example 2](/assets/example02.png)
 
-# 6) Links
-
-**GitHub Repo:** [link](https://github.com/emaxmagrill-cell/Final-Case)
-**Public Cloud App (optional):** [link](https://fantasy-football-leaderboard.onrender.com/)
